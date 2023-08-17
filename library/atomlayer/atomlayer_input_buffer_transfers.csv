@@ -1,0 +1,11 @@
+technology,width|datawidth,depth,energy,area,action
+32nm,16,128,6.46,2100,read, energy in pJ;  area in um^2;
+32nm,16,128,0,2100,write|update|idle
+# Power calculation for input buffers:
+# Power * Time / (Reads+Writes) = Energy per read/write
+# (1.24e-3 W) power * (16 * 100e-9s time/MAC / 1.2) / (128+128 reads+writes)
+# (1.24e-3) * (16 * 100e-9 / 1.2) / (128+128) * 1e12
+# Now for the transfers calculation, we also mark write energy = 0 so we don't
+# double charge for writes with the actual buffers. Only charge for reads when
+# another
+# buffer reads from the inter-buffer transfer network.

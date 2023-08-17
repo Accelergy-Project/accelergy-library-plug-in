@@ -1,0 +1,10 @@
+technology,width|datawidth,energy,area,action
+32nm,256,20.74,37500,read,energy in pJ;  area in um^2;
+32nm,256,0,37500,idle|update|write
+# Real router area is 4x this area. ISAAC shares between 4 tiles
+# Assuming router BW = eDRAM BW per tile
+# Power * Time / (Reads+Writes) = Energy per read/write
+# (42e-3 / 4 / 12) power
+# (16384 / ((128*8*10^7*1.2) * 100 / 128)) time for DACs/ADCs to consume entire input buffer
+# (16384 + 2048) / 256 reads+writes
+# (42e-3 / 4 / 12) * (16384 / ((128*8*10^7*1.2) * 100 / 128)) / ((16384 + 2048) / 256) * 1e12

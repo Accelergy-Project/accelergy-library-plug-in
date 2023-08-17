@@ -1,0 +1,6 @@
+newton_adc: isaac_adc
+newton_dac: isaac_dac
+newton_router: isaac_router
+newton_eDRAM: isaac_eDRAM
+newton_eDRAM_bus: isaac_eDRAM_bus
+newton_shift_add: isaac_shift_add

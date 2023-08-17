@@ -1,0 +1,6 @@
+technology,width|datawidth,depth,energy,area,action
+32nm,16,128,0.083,1620,read|write,energy in pJ;  area in um^2;
+32nm,16,128,0,1620,update|idle
+# 1 read, 1 write per DAC activation
+# Reported power = 0.39 / 4 x DAC
+# 0.166015625 / 2 = 0.083

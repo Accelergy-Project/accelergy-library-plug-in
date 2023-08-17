@@ -1,0 +1,45 @@
+// M. Hu et al., “Dot-product engine for neuromorphic computing: Programming 1T1M crossbar to accelerate matrix-vector multiplication,” in 2016 53nd ACM/EDAC/IEEE Design Automation Conference (DAC), Jun. 2016, pp. 1–6. doi: 10.1145/2897937.2898010.
+// As accurate as 8 bits per cell in a 256x256 crossbar
+// Read-Verify-Adjust scheme
+// 80% noise from memristors, 15% shot noise, 5% thermal nosie. Limit at ~8 bit crossbar even with
+// higher cell resolution.
+// "The RC delay of the crossbar is not considered here since, for the geometries considered here even in large crossbar arrays, is expected to be sub-ns"
+
+-MemCellType: memristor
+
+-CellArea (F^2): 1.49
+-CellAspectRatio: 1
+
+// Assuming ON resistance is set to 10x the minimum resistance
+// NMOS transistor in 32nm has ~15kOhm resistance.
+// Minimum resistance + transistor = 17k.
+-ResistanceOnAtSetVoltage (ohm): 2000
+-ResistanceOffAtSetVoltage (ohm): 3000000
+-ResistanceOnAtResetVoltage (ohm): 2000
+-ResistanceOffAtResetVoltage (ohm): 3000000
+-ResistanceOnAtReadVoltage (ohm): 2000
+-ResistanceOffAtReadVoltage (ohm): 3000000
+-ResistanceOnAtHalfResetVoltage (ohm): 2000
+-AccessTransistorResistance (ohm): 20000
+
+-CapacitanceOn (F): 1e-16
+-CapacitanceOff (F): 1e-16
+
+-ReadMode: current
+-ReadVoltage (V): 0.3
+-ReadPulseWidth (ns): 1 // Read pulse width was tricky. Assuming average resistance of 40k and average input of 0.3, we have
+                        // (0.3^2 * 0.3)/40k*(1ns ON / 100ns cycle) * (128x128x8 cells) = 2.4mW reported in ISAAC
+                        // (0.3^2) / (2.4mW / 128x128x8 cells)
+
+-ResetMode: voltage
+-ResetVoltage (V): 2
+-ResetPulse (ns): 40 // I couldn't find write stats so these are from PRIME
+
+-SetMode: voltage
+-SetVoltage (V): 2
+-SetPulse (ns): 40 // I couldn't find write stats so these are from PRIME
+
+-AccessType: CMOS
+
+-ReadFloating: false
+

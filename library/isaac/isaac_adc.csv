@@ -1,0 +1,24 @@
+technology,resolution,energy,area,n_components,action
+
+32nm,8,1.666666667,1200,1,convert|read
+32nm,8,0,1200,1,idle|update|write
+# Energy: 16*10^-3 W / (1.2*8*10^9 ADC BW) * 10 ^ 12 J->pJ
+# 16*10^-3 / (1.2*8*10^9) * 10 ^ 12
+# Area: 9600um^2 / 8
+
+
+# L. Kull et al.," ""A 3.1mW 8b 1.2GS/s single-channel asynchronous SAR ADC
+# with alternate comparators for enhanced speed in 32nm digital SOI
+# CMOS",2013,pp. 468-469,doi: 10.1109/ISSCC.2013.6487818.," 2013 IEEE
+# International Solid-State Circuits Conference Digest of Technical Papers
+
+# Below are scaled versions based on M. Saberi, R. Lotfi, K. Mafinezhad, W.
+# Serdijn et al., “Analysis of Power Consumption and Linearity in Capacitive
+# Digital-to-Analog Converters used in Successive Approximation ADCs,” 2011.
+32nm,4,0.79,361.04,1,convert|read
+32nm,5,0.99,476.91,1,convert|read
+32nm,6,1.20,626.91,1,convert|read
+32nm,7,1.42,845.18,1,convert|read
+32nm,8,1.67,1200,1,convert|read
+32nm,9,1.969078145,1827.911647,1,convert|read
+32nm,10,2.379022742,3002.008032,1,convert|read

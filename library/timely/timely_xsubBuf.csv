@@ -1,0 +1,4 @@
+technology,rows,energy,area,action
+65nm,1,0.00062,5,read|drive|buffer
+65nm,1,0,5,idle|write|update
+# Numbers from paper table II

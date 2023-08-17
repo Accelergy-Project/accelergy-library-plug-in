@@ -1,0 +1,50 @@
+// L. Gao, F. Alibart, and D. Strukov, “A High Resolution Nonvolatile Analog
+// Memory Ionic Devices,” 2013.
+// https://www.semanticscholar.org/paper/A-High-Resolution-Nonvolatile-Analog-Memory-Ionic-Gao-Alibart/306c8abc890a697887dcb2ea7378b8b44f930f9c
+// (accessed May 10, 2022).
+// As low as 3% error in xbars -> 5 bits per cell
+// Read-Verify-Adjust scheme
+// Area taken from TIMELY: 100um^2 / (0.065 F / um) ^ 2 / (256x256 cells) = 0.36115477071
+
+
+// Area is 1um^2 at a 30nm regime from High-Precision Tuning of State for
+// Memristive Devices by Adaptable Variation-Tolerant Algorithm by Fabien
+// Alibart, Ligang Gao, Brian Hoskins, and Dmitri Strukov1
+
+
+
+// WARNING: Area smaller than 1F^2
+// Read pulse taken from TIMELY: 50ps
+-MemCellType: memristor
+
+-CellArea (F^2): 0.36115477071
+-CellAspectRatio: 1
+
+-ResistanceOnAtSetVoltage (ohm): 1000
+-ResistanceOffAtSetVoltage (ohm): 20000
+-ResistanceOnAtResetVoltage (ohm): 1000
+-ResistanceOffAtResetVoltage (ohm): 20000
+-ResistanceOnAtReadVoltage (ohm): 1000
+-ResistanceOffAtReadVoltage (ohm): 20000
+-ResistanceOnAtHalfResetVoltage (ohm): 1000
+-AccessTransistorResistance (ohm): 20000
+
+-CapacitanceOn (F): 1e-16
+-CapacitanceOff (F): 1e-16
+
+-ReadMode: current
+-ReadVoltage (V): 0.2
+-ReadPulseWidth (ns): 0.05 # TIMELY
+
+-ResetMode: voltage
+-ResetVoltage (V): 2
+-ResetPulse (ns): 40 // From PRIME
+
+-SetMode: voltage
+-SetVoltage (V): 2
+-SetPulse (ns): 40 // From PRIME
+
+-AccessType: None
+
+-ReadFloating: false
+

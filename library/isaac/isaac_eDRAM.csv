@@ -1,0 +1,8 @@
+technology,width|datawidth,depth,energy,area,action
+32nm,256,2048,20.45,83000,read|write|update,energy in pJ;  area in um^2;
+32nm,256,2048,0,83000,idle
+# Power * Time / (Reads+Writes) = Energy per read/write
+# (20.7e-3 / 12 W/IMA) power
+# (16384 / ((128*8*10^7*1.2) * 100 / 128)) time for DACs/ADCs to consume entire input buffer
+# (16384 + 2048) * 2 / 256 reads+writes, including IMA<->eDRAM<->network
+# (20.7e-3 / 12) * (16384 / ((128*8*10^7*1.2) * 100 / 128)) / ((16384 + 2048) * 2 / 256) * 1e12

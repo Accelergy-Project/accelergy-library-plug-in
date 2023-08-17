@@ -1,0 +1,5 @@
+  version: 0.0
+  ScalingEstimator:
+    module:  accelergywrapper
+    class:   LibraryEstimator
+    parameter: none

@@ -1,0 +1,4 @@
+technology,energy,area,action
+65nm,0.0417,40,compare|read
+65nm,0,40,write|update|idle
+# Numbers from paper table II

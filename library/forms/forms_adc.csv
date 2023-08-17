@@ -1,0 +1,6 @@
+technology,resolution,energy,area,n_components,action
+32nm,4,0.22619,284.375,1,convert|read
+32nm,4,0,284.375,1,update|write|idle
+# Energy: 15.2*10^-3 W / (2.1*32*10^9 ADC BW) * 10 ^ 12 J->pJ
+# 15.2*10^-3 / (2.1*32*10^9) * 10 ^ 12
+# Area: 9100um^2 / 32
