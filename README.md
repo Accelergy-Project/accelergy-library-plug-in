@@ -7,6 +7,8 @@ set of components for comparison.
 The Library plug-in requires Accelergy v0.4.0 or later. It can be installed
 with pip:
 ```
+git clone git@github.com:Accelergy-Project/accelergy-library-plug-in.git
+cd accelergy-library-plug-in
 pip3 install .
 ```
 
