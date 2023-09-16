@@ -1,4 +1,4 @@
-technology,width|datawidth,width_a|datawidth_a,width_b|datawidth_b,energy(pJ),area(um^2),action,comment
-45,32,32,32,12.68,6350,multiply|read
-45,32,32,32,0.08,6350,idle
-45,32,32,32,0,6350,update|write
+technology,global_cycle_seconds,width|datawidth,width_a|datawidth_a,width_b|datawidth_b,energy(pJ),area(um^2),action,comment
+45nm,1e-9,32,32,32,12.68,6350,multiply|read
+45nm,1e-9,32,32,32,0.08,6350,leak
+45nm,1e-9,32,32,32,0,6350,update|write

@@ -61,7 +61,7 @@ def get_technology_node_index(tech_node: float) -> float:
 
     assert not failed, (
         f"Technology node {tech_node} nm not supported. Ensure all technology"
-        f"nodes are in the range [{TECH_NODES[-1]} nm, {TECH_NODES[0]} nm]"
+        f"nodes are in the range [{TECH_NODES[-1]} nm,1e-9, {TECH_NODES[0]} nm]"
     )
     l_node, s_node = TECH_NODES[larger_idx], TECH_NODES[smaller_idx]
     if larger_idx == smaller_idx:
@@ -137,7 +137,7 @@ def scale_area(param: str, v0: float, v1: float) -> float:
         "rows",
         "cols",
         "columns",
-        "n_components",
+        "n_instances",
         "width_a",
         "width_b",
         "datawidth_a",
@@ -154,6 +154,8 @@ def scale_area(param: str, v0: float, v1: float) -> float:
         "average_output_value",
         "no_scale_area",
         "no_scale_energy",
+        "voltage",
+        "global_cycle_seconds",
     ]:
         return 1
 
@@ -169,7 +171,6 @@ def scale_area(param: str, v0: float, v1: float) -> float:
 
 def scale_energy(param: str, v0: float, v1: float) -> float:
     """Scales the energy of a component from "param" value v0 to v1."""
-
     # Linear scaling
     if param in [
         "width",
@@ -191,10 +192,11 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
         "rows",
         "cols",
         "columns",
-        "n_components",
         "area_scale",
         "no_scale_area",
         "no_scale_energy",
+        "n_instances",
+        'global_cycle_seconds'
     ]:
         return 1
 
@@ -205,15 +207,30 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
         return get_tech_node_energy_scale(v0, v1)
     if param == "resolution":
         return 2 ** (v1 - v0)
+    if param == "voltage":
+        return (v1 / v0) ** 2
     raise ValueError(f"Scaling of paramter {param} not supported.")
+
+
+def scale_leak(param: str, v0: float, v1: float) -> float:
+    if param == "voltage":
+        return 1
+    if param in ["n_instances", "global_cycle_seconds"]:
+        return v1 / v0
+    return scale_energy(param, v0, v1)
 
 
 def scale_energy_or_area(
     param: str, v0: float, v1: float, target: str
 ) -> float:
+    param = param.lower()
+    target = target.lower()
     """Scales the energy or area of a component from "param" value v0 to v1."""
     if target == "area":
         return scale_area(param, v0, v1)
     if target == "energy":
         return scale_energy(param, v0, v1)
-    raise ValueError(f'Target {target} not supported. Use "area" or "energy".')
+    if target == "leak":
+        return scale_leak(param, v0, v1)
+    raise ValueError(
+        f'Target {target} not supported. Use "area", "energy", or "leak.')

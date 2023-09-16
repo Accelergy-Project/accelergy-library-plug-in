@@ -1,6 +1,6 @@
-technology,width|datawidth,energy,area,action
-32nm,256,20.74,37500,read,energy in pJ;  area in um^2;
-32nm,256,0,37500,idle|update|write
+technology,global_cycle_seconds,width|datawidth,energy,area,action
+32nm,1e-9,256,20.74,37500,read,energy in pJ;  area in um^2;
+32nm,1e-9,256,0,37500,leak|update|write
 # Real router area is 4x this area. ISAAC shares between 4 tiles
 # Assuming router BW = eDRAM BW per tile
 # Power * Time / (Reads+Writes) = Energy per read/write

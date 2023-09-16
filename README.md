@@ -53,25 +53,26 @@ Special characters:
 All entries are case-insensitive.
 
 ### Required Actions
-Components are required to have a read, write, update, and idle action. Other
+Components are required to have a read, write, update, and leak action. Other
 actions are optional. This allows Library components to be realized directly in
 Timeloop architectures.
 
 Often, some of these required actions may not make sense for a component. For
-exmaple, a digital multiplier may only have "multiply" and "idle" actions. We
+exmaple, a digital multiplier may only have "multiply" and "leak" actions. We
 follow the following convention for these cases:
 - If the "read" action does not make sense for a component, then it is set to
 the typical action for the component. For example, a multiplier's "read" action
 is set to "multiply".
 - If "write"/"update" actions do not make sense for a component, then they are
-set to "idle".
+set to "leak".
 
 In our multiplier example, we would create an entry multiplier.csv that looks
 like:
 ```
-width_a|datawidth_a, width_b|datawidth_b, technology, energy, area, action
-32,                  32,                  65,         5,      300,  multiply|read
-32,                  32,                  65,         0,      300,  idle|write|update
+width_a|datawidth_a, width_b|datawidth_b, technology, global_cycle_seconds, energy, area, action
+32,                  32,                  65,         1e-9                  5,      300,  multiply|read
+32,                  32,                  65,         1e-9,                 0.01,   300,  leak
+32,                  32,                  65,         1e-9                  0,      300,  write|update
 ```
 
 ### Pointers To Other Entries 
@@ -100,25 +101,29 @@ entry using the following algorithm:
 
 ## Scaling Parameters
 The Library plug-in will attempt to scale the entry attributes to match the
-query attributes. The following parameters can be scaled:
+query attributes. The following parameters can be scaled. When not otherwise
+specified, leakage scales linearly with energy:
 - `technology` scales energy/area based on Aaron Stillmaker, Bevan Baas, Scaling
   equations for the accurate prediction of CMOS device performance from 180nm
   to 7nm, Integration, Volume 58, 2017, Pages 74-81, ISSN 0167-9260,
   https://doi.org/10.1016/j.vlsi.2017.02.002.
-
 - `resolution` scales energy/area exponentially with a factor of 2
+- `voltage` scales energy quadratically, and leakage linearly.
 - `energy_scale`, `average_input_value`, `average_weight_value`, and
   `average_output_value` scale energy linearly
 - `area_scale`, `rows`, `cols`, and `columns` scale area linearly
-- `n_components`, `width`, `datawidth`, `width_a`, `width_b`, `datawidth_a`,
+- `n_instances` scales area/leakage linearly
+- `global_cycle_seconds` scales leakage linearly
+- `width`, `datawidth`, `width_a`, `width_b`, `datawidth_a`,
   and `datawidth_b`, scale energy/area linearly
 - `resolution` scales energy/area exponentially with a factor of 2
 - `depth` scales area linearly, energy with a power of 1.56 / 2 to match the
   buffer energy scaling of CACTI. S. J. E. Wilton and N. P. Jouppi, "CACTI: an
   enhanced cache access and cycle time model," in IEEE Journal of Solid-State
   Circuits, vol. 31, no. 5, pp. 677-688, May 1996, doi: 10.1109/4.509850.
-- `no_scale_area` tells the Library plug-in to avoid scaling area
-- `no_scale_energy` tells the Library plug-in to avoid scaling energy
+- 
+- `no_scale_area` disables scaling area for any other parameters.
+- `no_scale_energy` disables scaling energy for any other parameters.
 
 
 ## Contributing: Adding or Updating Numbers from Your Work 

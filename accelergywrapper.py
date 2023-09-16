@@ -44,7 +44,7 @@ class LibraryEstimator(AccelergyPlugIn):
         for c in self.components:
             c.setdefault("area_scale", 1)
             c.setdefault("energy_scale", 1)
-            c.setdefault("n_components", 1)
+            c.setdefault("n_instances", 1)
 
         self.action2entry = {}
         self.name2entry = {}
@@ -58,12 +58,27 @@ class LibraryEstimator(AccelergyPlugIn):
                 ).append(entry)
                 self.name2entry.setdefault(entry["name"], []).append(entry)
 
-        # Make sure all components have a read, write, update, and idle action
+        # Make sure all components have a read, write, update, and leak action
         for name in self.name2entry:
-            for action in ["read", "write", "update", "idle"]:
+            for action in ["read", "write", "update", "leak"]:
                 assert (
                     (name, action) in self.action2entry
                 ), f"Missing {action} action for Library component {name}."
+
+    def _load_component_lines(self, name: str, lines: List[str]):
+        """Loads the component lines into self.components"""
+        keys = [k.strip() for k in lines[0].split(",")]
+        last_nonempty = 0
+        for i, k in enumerate(keys):
+            if k:
+                last_nonempty = i
+        keys = keys[: last_nonempty + 1]
+
+        for l in lines[1:]:
+            if l:
+                values = [v.strip() for v in l.split(",")]
+                self.components.append(dict(zip(keys, values)))
+                self.components[-1]["name"] = name.lower()
 
     def _load_component_files(self, files: List[str]):
         """Loads the component files into self.components"""
@@ -71,19 +86,19 @@ class LibraryEstimator(AccelergyPlugIn):
         for f in component_files:
             lines = [l.split("#")[0].strip() for l in open(f).readlines()]
             lines = [l for l in lines if l.replace(",", "")]
-            name = os.path.basename(f).split(".")[0]
-            keys = [k.strip() for k in lines[0].split(",")]
-            last_nonempty = 0
-            for i, k in enumerate(keys):
-                if k:
-                    last_nonempty = i
-            keys = keys[: last_nonempty + 1]
 
-            for l in lines[1:]:
-                if l:
-                    values = [v.strip() for v in l.split(",")]
-                    self.components.append(dict(zip(keys, values)))
-                    self.components[-1]["name"] = name.lower()
+            curname = os.path.basename(f).split(".")[0]
+            curlines = []
+            for i, l in enumerate(lines):
+                if 'COMPONENT' in lines[i]:
+                    if curlines:
+                        self._load_component_lines(curname, curlines)
+                        curlines = []
+                    curname = l.split(":")[1].strip()
+                else:
+                    curlines.append(l)
+            if curlines:
+                self._load_component_lines(curname, curlines)
 
     def _load_reference_files(self, files: List[str]):
         """Loads the reference files into self.components"""
@@ -164,14 +179,12 @@ class LibraryEstimator(AccelergyPlugIn):
 
         for a in class_attrs:
             entry_val = entry.get(class2entry[a], None)
-            if (
-                entry_val is None or str(entry_val) == '*'
-                or str(entry_val).lower() == str(class_attrs[a]).lower()
+            if entry_val is None:
+                pass
+            elif (
+                str(entry_val) == '*' or str(
+                    entry_val).lower() == str(class_attrs[a]).lower()
             ):
-                log.append(
-                    f"Matched {a} with value {class_attrs[a]} to "
-                    f"entry value {entry_val}"
-                )
                 matching_attrs.append(a)
             elif not class_attrs.get(f"no_scale_{target}", False):
                 log.append(f"Scaling {a} from {entry_val} to {class_attrs[a]}")
@@ -212,6 +225,9 @@ class LibraryEstimator(AccelergyPlugIn):
         # For finding closest-matching component
         best_value, best_matches, best_log, best_entry = None, -1, [], {}
         target = "energy" if is_energy else "area"
+        get_value = target
+        if query.action_name == 'leak':
+            target = 'leak'
 
         if is_energy:
             action_name = query.action_name.lower()
@@ -234,7 +250,9 @@ class LibraryEstimator(AccelergyPlugIn):
             if log_scaling:
                 log.append(f"{class_name} {target} has been scaled {scale}x")
 
-            value = get_value_from_entry(entry, target)
+            value = get_value_from_entry(entry, get_value)
+            self.logger.info(f'{value=}, {matching_attrs=}, {log=}')
+
             if value is not None and matching_attrs > best_matches:
                 best_value = value * scale
                 best_matches = matching_attrs

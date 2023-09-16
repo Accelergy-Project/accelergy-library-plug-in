@@ -1,4 +1,4 @@
-technology,width|datawidth,energy(pJ),area(um^2),action
-45,32,0.02947,71,compare|read
-45,32,2.51E-05,71,idle
-45,32,0,71,update|write
+technology,global_cycle_seconds,width|datawidth,energy(pJ),area(um^2),action
+45nm,1e-9,32,0.02947,71,compare|read
+45nm,1e-9,32,2.51E-05,71,leak
+45nm,1e-9,32,0,71,update|write

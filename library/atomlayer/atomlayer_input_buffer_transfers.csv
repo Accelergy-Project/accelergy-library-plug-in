@@ -1,6 +1,6 @@
-technology,width|datawidth,depth,energy,area,action
-32nm,16,128,6.46,2100,read, energy in pJ;  area in um^2;
-32nm,16,128,0,2100,write|update|idle
+technology,global_cycle_seconds,width|datawidth,depth,energy,area,action
+32nm,1e-9,16,128,6.46,2100,read, energy in pJ;  area in um^2;
+32nm,1e-9,16,128,0,2100,write|update|leak
 # Power calculation for input buffers:
 # Power * Time / (Reads+Writes) = Energy per read/write
 # (1.24e-3 W) power * (16 * 100e-9s time/MAC / 1.2) / (128+128 reads+writes)

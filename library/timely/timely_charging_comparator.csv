@@ -1,4 +1,4 @@
-technology,energy,area,action
-65nm,0.0417,40,compare|read
-65nm,0,40,write|update|idle
+technology,global_cycle_seconds,energy,area,action
+65nm,1e-9,0.0417,40,compare|read
+65nm,1e-9,0,40,write|update|leak
 # Numbers from paper table II

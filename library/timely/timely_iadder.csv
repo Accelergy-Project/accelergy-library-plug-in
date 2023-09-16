@@ -1,5 +1,5 @@
-technology,energy,area,action
-65nm,0.0368,40,read|add
-65nm,0,40,write|update|idle
+technology,global_cycle_seconds,energy,area,action
+65nm,1e-9,0.0368,40,read|add
+65nm,1e-9,0,40,write|update|leak
 # TIMELY says these don't contribute to area
 # Numbers from paper table II

@@ -1,6 +1,6 @@
-technology,resolution,energy,area,action
-32nm,9,2.58333333333,1500,convert|read
-32nm,9,0,1500,write|update|idle
+technology,global_cycle_seconds,resolution,energy,area,action
+32nm,1e-9,9,2.58333333333,1500,convert|read
+32nm,1e-9,9,0,1500,write|update|leak
 # Energy: 3.1*10^-3 W / (1.2*10^9 ADC BW) * 10 ^ 12 J->pJ
 # Newton's adapative ADC resolution table:
 # 9,9,7,5,1,0,9,3

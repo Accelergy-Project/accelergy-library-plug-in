@@ -1,6 +1,6 @@
-technology,resolution,energy,area,action
-40nm,8,0.291,438,read|convert
-40nm,8,0,438,update|write|idle
+technology,global_cycle_seconds,resolution,energy,area,action
+40nm,1e-9,8,0.291,438,read|convert
+40nm,1e-9,8,0,438,update|write|leak
 
 # H. Chen,X. Zhot,F. Zhang and Q. Li,"A >3GHz ERBW 1.1GS/S 8B Two-Sten SAR ADC
 # with,Q. Yu Recursive-Weight DAC," 2018 IEEE Symposium on VLSI Circuits,pp.

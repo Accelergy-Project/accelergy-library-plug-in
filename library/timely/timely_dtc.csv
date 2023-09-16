@@ -1,4 +1,4 @@
-technology,resolution,energy,area,action
-65nm,8,0.0375,240,convert|read
-65nm,8,0,240,write|idle|update
+technology,global_cycle_seconds,resolution,energy,area,action
+65nm,1e-9,8,0.0375,240,convert|read
+65nm,1e-9,8,0,240,write|leak|update
 # Numbers from paper table II

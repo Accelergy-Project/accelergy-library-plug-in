@@ -1,4 +1,4 @@
-technology,width|datawidth,depth,energy,area,action
-65nm,128,128,203.776,40,read
-65nm,128,128,496.624,40,write|update
-65nm,128,128,0,40,idle
+technology,global_cycle_seconds,width|datawidth,depth,energy,area,action
+65nm,1e-9,128,128,203.776,40,read
+65nm,1e-9,128,128,496.624,40,write|update
+65nm,1e-9,128,128,0,40,leak

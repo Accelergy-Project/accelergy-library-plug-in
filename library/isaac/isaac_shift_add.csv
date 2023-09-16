@@ -1,6 +1,6 @@
-technology,width|datawidth,energy,area,action
-32nm,16,0.021,60,shift_add|read|write,energy in pJ;  area in um^2
-32nm,16,0.00E+00,60,idle|update
+technology,global_cycle_seconds,width|datawidth,energy,area,action
+32nm,1e-9,16,0.021,60,shift_add|read|write,energy in pJ;  area in um^2
+32nm,1e-9,16,0.00E+00,60,leak|update
 # Energy: 16*10^-3 W / (1.2*8*10^9 ADC BW) * 10 ^ 12 J->pJ
 # Energy: .2e-3 W / (1.2*8*10^9 ADC BW) * 10 ^ 12 J->pJ
 # .2e-3 / (1.2*8*10^9) * 10 ^ 12
