@@ -5,4 +5,4 @@ technology,global_cycle_seconds,resolution,energy,area,rows,action
 # Energy: 4*10^-3 W / (128*8*10^7*1.2 DAC BW) * 10 ^ 12 J->pJ * 128/100 underutilized due to ADC
 # 4e-3 / (128 * 8 * 1.2 * 10 ^ 7) * 10 ^ 12 * 128/100
 # 0.3255 * 8 * 128 * 1.2e9 / 100 * 1e-9
-# Area: 170um^2 / 128 / 128 / 8
+# Area: 170um^2 / 128 / 8
