@@ -1,7 +1,8 @@
 technology,global_cycle_seconds,width|datawidth,energy,area,action
-32nm,1e-9,256,20.74,150000,read,energy in pJ;  area in um^2;
-32nm,1e-9,256,0,150000,leak|update|write
-# ISAAC shares each of these between 4 tiles
+32nm,1e-9,256,20.74,37500,read,energy in pJ;  area in um^2;
+32nm,1e-9,256,0,37500,leak|update|write
+# To match the paper where ISAAC shares each of these between 4 tiles. Quarter the area
+# relative to isaac_router
 # Assuming router BW = eDRAM BW per tile
 # Power * Time / (Reads+Writes) = Energy per read/write
 # (42e-3 / 4 / 12) power
