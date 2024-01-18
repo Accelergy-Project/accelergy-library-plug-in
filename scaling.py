@@ -60,7 +60,7 @@ def get_technology_node_index(tech_node: float) -> float:
     failed = larger_idx is None or smaller_idx is None
 
     assert not failed, (
-        f"Technology node {tech_node} nm not supported. Ensure all technology"
+        f"Technology node {tech_node} nm not supported. Ensure all technology "
         f"nodes are in the range [{TECH_NODES[-1]} nm,1e-9, {TECH_NODES[0]} nm]"
     )
     l_node, s_node = TECH_NODES[larger_idx], TECH_NODES[smaller_idx]
@@ -184,6 +184,7 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
         "datawidth_a",
         "datawidth_b",
         "datawidth",
+        "n_steps",
     ]:
         return v1 / v0
 
@@ -196,7 +197,7 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
         "no_scale_area",
         "no_scale_energy",
         "n_instances",
-        'global_cycle_seconds'
+        "global_cycle_seconds",
     ]:
         return 1
 
@@ -220,9 +221,7 @@ def scale_leak(param: str, v0: float, v1: float) -> float:
     return scale_energy(param, v0, v1)
 
 
-def scale_energy_or_area(
-    param: str, v0: float, v1: float, target: str
-) -> float:
+def scale_energy_or_area(param: str, v0: float, v1: float, target: str) -> float:
     param = param.lower()
     target = target.lower()
     """Scales the energy or area of a component from "param" value v0 to v1."""
@@ -232,5 +231,8 @@ def scale_energy_or_area(
         return scale_energy(param, v0, v1)
     if target == "leak":
         return scale_leak(param, v0, v1)
-    raise ValueError(
-        f'Target {target} not supported. Use "area", "energy", or "leak.')
+    raise ValueError(f'Target {target} not supported. Use "area", "energy", or "leak.')
+
+
+if __name__ == "__main__":
+    print(get_tech_node_energy_scale(45, 22, 0.7))

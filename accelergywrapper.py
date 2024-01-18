@@ -13,6 +13,7 @@ SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(SCRIPT_DIR)
 from scaling import *
 from helper_functions import *
+
 # fmt: on
 
 AREA_ACCURACY = 90
@@ -37,9 +38,7 @@ class LibraryEstimator(AccelergyPlugIn):
 
         self._load_component_files(files)
         self._load_reference_files(files)
-        self.logger.info(
-            f"Loaded {len(self.components)} components from library."
-        )
+        self.logger.info(f"Loaded {len(self.components)} components from library.")
 
         for c in self.components:
             c.setdefault("area_scale", 1)
@@ -62,8 +61,11 @@ class LibraryEstimator(AccelergyPlugIn):
         for name in self.name2entry:
             for action in ["read", "write", "update", "leak"]:
                 assert (
-                    (name, action) in self.action2entry
-                ), f"Missing {action} action for Library component {name}."
+                    name,
+                    action,
+                ) in self.action2entry, (
+                    f"Missing {action} action for Library component {name}."
+                )
 
     def _load_component_lines(self, name: str, lines: List[str]):
         """Loads the component lines into self.components"""
@@ -90,7 +92,7 @@ class LibraryEstimator(AccelergyPlugIn):
             curname = os.path.basename(f).split(".")[0]
             curlines = []
             for i, l in enumerate(lines):
-                if 'COMPONENT' in lines[i]:
+                if "COMPONENT" in lines[i]:
                     if curlines:
                         self._load_component_lines(curname, curlines)
                         curlines = []
@@ -124,15 +126,11 @@ class LibraryEstimator(AccelergyPlugIn):
                     + "\n\t".join(c["name"] for c in self.components)
                 )
 
-    def primitive_action_supported(
-        self, query: AccelergyQuery
-    ) -> AccuracyEstimation:
+    def primitive_action_supported(self, query: AccelergyQuery) -> AccuracyEstimation:
         success = self.get_energy_or_area(query, log_scaling=False) is not None
         return AccuracyEstimation(ENERGY_ACCURACY if success else 0)
 
-    def primitive_area_supported(
-        self, query: AccelergyQuery
-    ) -> AccuracyEstimation:
+    def primitive_area_supported(self, query: AccelergyQuery) -> AccuracyEstimation:
         success = self.estimate_area(query, log_scaling=False) is not None
         return AccuracyEstimation(AREA_ACCURACY if success else 0)
 
@@ -182,8 +180,8 @@ class LibraryEstimator(AccelergyPlugIn):
             if entry_val is None:
                 pass
             elif (
-                str(entry_val) == '*' or str(
-                    entry_val).lower() == str(class_attrs[a]).lower()
+                str(entry_val) == "*"
+                or str(entry_val).lower() == str(class_attrs[a]).lower()
             ):
                 matching_attrs.append(a)
             elif not class_attrs.get(f"no_scale_{target}", False):
@@ -194,8 +192,7 @@ class LibraryEstimator(AccelergyPlugIn):
         try:
             # Try to scale the attributes that must be scaled
             for a in attrs_to_scale:
-                scalefrom = parse_float(
-                    entry[class2entry[a]], f"{class_name}.{a}")
+                scalefrom = parse_float(entry[class2entry[a]], f"{class_name}.{a}")
                 scaleto = parse_float(class_attrs[a], f"{class_name}.{a}")
                 s = scale_energy_or_area(a, scalefrom, scaleto, target)
 
@@ -209,7 +206,7 @@ class LibraryEstimator(AccelergyPlugIn):
                         f"{scaleto}: {s}x {target}"
                     )
 
-        except ValueError as e:
+        except (ValueError, ZeroDivisionError) as e:
             scale = None
             self.logger.info(f"Failed to scale {class_name}: {str(e).strip()}")
 
@@ -226,8 +223,8 @@ class LibraryEstimator(AccelergyPlugIn):
         best_value, best_matches, best_log, best_entry = None, -1, [], {}
         target = "energy" if is_energy else "area"
         get_value = target
-        if query.action_name == 'leak':
-            target = 'leak'
+        if query.action_name == "leak":
+            target = "leak"
 
         if is_energy:
             action_name = query.action_name.lower()
@@ -251,7 +248,7 @@ class LibraryEstimator(AccelergyPlugIn):
                 log.append(f"{class_name} {target} has been scaled {scale}x")
 
             value = get_value_from_entry(entry, get_value)
-            self.logger.info(f'{value=}, {matching_attrs=}, {log=}')
+            self.logger.info(f"{value=}, {matching_attrs=}, {log=}")
 
             if value is not None and matching_attrs > best_matches:
                 best_value = value * scale
