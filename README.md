@@ -112,7 +112,6 @@ specified, leakage scales linearly with energy:
 - `energy_scale`, `average_input_value`, `average_weight_value`, and
   `average_output_value` scale energy linearly
 - `area_scale`, `rows`, `cols`, and `columns` scale area linearly
-- `n_instances` scales area/leakage linearly
 - `global_cycle_seconds` scales leakage linearly
 - `width`, `datawidth`, `width_a`, `width_b`, `datawidth_a`,
   and `datawidth_b`, scale energy/area linearly
