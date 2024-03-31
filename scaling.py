@@ -137,7 +137,6 @@ def scale_area(param: str, v0: float, v1: float) -> float:
         "rows",
         "cols",
         "columns",
-        "n_instances",
         "width_a",
         "width_b",
         "datawidth_a",
@@ -155,6 +154,7 @@ def scale_area(param: str, v0: float, v1: float) -> float:
         "no_scale_area",
         "no_scale_energy",
         "voltage",
+        "n_instances",
         "global_cycle_seconds",
     ]:
         return 1
@@ -216,7 +216,7 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
 def scale_leak(param: str, v0: float, v1: float) -> float:
     if param == "voltage":
         return 1
-    if param in ["n_instances", "global_cycle_seconds"]:
+    if param in ["global_cycle_seconds"]:
         return v1 / v0
     return scale_energy(param, v0, v1)
 
@@ -236,3 +236,5 @@ def scale_energy_or_area(param: str, v0: float, v1: float, target: str) -> float
 
 if __name__ == "__main__":
     print(get_tech_node_energy_scale(45, 22, 0.7))
+    for x in TECH_NODES:
+        print(x, get_tech_node_energy_scale(130, x))
