@@ -30,14 +30,24 @@ class LibraryEstimator(AccelergyPlugIn):
         super().__init__()
         self.components = []
 
-        files = [
+        component_files = [
             os.path.join(root, f)
             for root, _, files in os.walk(os.path.join(SCRIPT_DIR, "library"))
             for f in files
         ]
 
-        self._load_component_files(files)
-        self._load_reference_files(files)
+        for k, v in os.environ.items():
+            if "ACCELERGY_COMPONENT_LIBRARIES" not in k:
+                continue
+            for path in v.split(","):
+                component_files += [
+                    os.path.join(root, f)
+                    for root, _, files in os.walk(path)
+                    for f in files
+                ]
+
+        self._load_component_files(component_files)
+        self._load_reference_files(component_files)
         self.logger.info(f"Loaded {len(self.components)} components from library.")
 
         for c in self.components:
