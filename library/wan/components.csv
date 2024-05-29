@@ -1,7 +1,7 @@
 COMPONENT: wan_variable_precision_adc
 # 0.35 * n_steps
 technology,n_steps,global_cycle_seconds,voltage,energy,area,  action
-130nm,     1,      1e-6,                1.8,    0.25,  400,   read
+130nm,     1,      1e-6,                1.8,    0.3,  400,   read
 130nm,     *,      1e-6,                1.8,    0,     400,   leak
 130nm,     *,      1e-6,                1.8,    0,     400,   write|update
 
@@ -49,7 +49,7 @@ technology,n_steps,global_cycle_seconds,voltage,energy,area, action
 # 130nm,     29,     1e-6,                1.8,    8.45,  350,  read
 # 130nm,     30,     1e-6,                1.8,    8.7,   350,  read
 # 130nm,     31,     1e-6,                1.8,    8.95,  350,  read
-130nm,     1,     1e-6,                 1.8,    0.25,  350,  read
+130nm,     1,      1e-6,                 1.8,   0.25,  350,  read
 130nm,     *,      1e-6,                1.8,    0,     350,  leak
 130nm,     *,      1e-6,                1.8,    0,     350,  write|update
 
@@ -59,21 +59,3 @@ technology,global_cycle_seconds,voltage,energy,area,  action
 130nm,     1e-6,                1.8,    1.2,   350,  read
 130nm,     1e-6,                1.8,    0,     350,  leak
 130nm,     1e-6,                1.8,    0,     350,  write|update
-
-# COMPONENT: wan_integrator
-# technology,global_cycle_seconds,voltage,energy,area,  action
-# 130nm,     1e-6,                1.8,    0.3,   700, read
-# 130nm,     1e-6,                1.8,    0,     700, leak
-# 130nm,     1e-6,                1.8,    0,     700, write|update
-# 
-# COMPONENT: wan_adc
-# technology,global_cycle_seconds,voltage,energy,area,   action
-# 130nm,     1e-6,                1.8,    0.64,  400,   read
-# 130nm,     1e-6,                1.8,    0,     400,   leak
-# 130nm,     1e-6,                1.8,    0,     400,   write|update
-# 
-# COMPONENT: wan_shift_add
-# technology,global_cycle_seconds,resolution, voltage,energy,area,  action
-# 130nm,     1e-6,                8,          1.8,    0.75,  170,  read
-# 130nm,     1e-6,                8,          1.8,    0,     170,  leak
-# 130nm,     1e-6,                8,          1.8,    0,     170,  write|update

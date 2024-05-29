@@ -1,0 +1,2 @@
+global_cycle_seconds,energy,area,n_instances,action
+1e-9,0,0,1,read|update|leak|write|*
