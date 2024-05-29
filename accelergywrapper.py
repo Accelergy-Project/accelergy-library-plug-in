@@ -4,6 +4,10 @@ from accelergy.plug_in_interface.interface import (
     AccuracyEstimation,
     AccelergyQuery,
 )
+from accelergy.plug_in_interface.estimator_wrapper import (
+    SupportedComponent,
+    PrintableCall,
+)
 from typing import Dict, List, Tuple, Union
 import os
 import sys
@@ -274,6 +278,20 @@ class LibraryEstimator(AccelergyPlugIn):
         if best_value is None:
             raise ValueError(f"Could not find {target} for {class_name}")
         return Estimation(best_value, "p" if is_energy else "u^2")
+
+    def get_supported_components(self) -> List[SupportedComponent]:
+        supported = []
+        for c in self.components:
+            class_names = c["name"].split("|")
+            c_popped = {k: v for k, v in c.items() if k not in ["name", "action"]}
+            supported.append(
+                SupportedComponent(
+                    class_names,
+                    PrintableCall("", [], c_popped),
+                    [PrintableCall(a) for a in c["action"].split("|")],
+                )
+            )
+        return supported
 
 
 if __name__ == "__main__":
