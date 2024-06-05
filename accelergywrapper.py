@@ -55,8 +55,6 @@ class LibraryEstimator(AccelergyPlugIn):
         self.logger.info(f"Loaded {len(self.components)} components from library.")
 
         for c in self.components:
-            c.setdefault("area_scale", 1)
-            c.setdefault("energy_scale", 1)
             c.setdefault("n_instances", 1)
 
         self.action2entry = {}

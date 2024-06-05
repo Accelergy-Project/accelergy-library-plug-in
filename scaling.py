@@ -130,7 +130,6 @@ def scale_area(param: str, v0: float, v1: float) -> float:
 
     # Linear scaling
     if param in [
-        "area_scale",
         "width",
         "datawidth",
         "depth",
@@ -156,6 +155,9 @@ def scale_area(param: str, v0: float, v1: float) -> float:
         "voltage",
         "n_instances",
         "global_cycle_seconds",
+        "area_scale",
+        "energy_scale",
+        "n_instances",
     ]:
         return 1
 
@@ -175,7 +177,6 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
     if param in [
         "width",
         "datawidth",
-        "energy_scale",
         "average_input_value",
         "average_weight_value",
         "average_output_value",
@@ -194,6 +195,8 @@ def scale_energy(param: str, v0: float, v1: float) -> float:
         "cols",
         "columns",
         "area_scale",
+        "energy_scale",
+        "n_instances",
         "no_scale_area",
         "no_scale_energy",
         "n_instances",
