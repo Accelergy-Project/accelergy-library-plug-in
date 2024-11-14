@@ -70,14 +70,26 @@ def get_technology_node_index(tech_node: float) -> float:
     return larger_idx + (smaller_idx - larger_idx) * interp
 
 
+def constrain_to_tech_nodes(tech_node: float):
+    if tech_node < min(TECH_NODES):
+        return min(TECH_NODES), tech_node / min(TECH_NODES)
+    if tech_node > max(TECH_NODES):
+        return max(TECH_NODES), tech_node / max(TECH_NODES)
+    return tech_node, 1
+
+
 def get_tech_node_area_scale(from_node: float, to_node: float) -> float:
     """Returns the scaling factor for area from the technology node
     `from_node` to the technology node `to_node`. Interpolates if necessary."""
+    from_node, x = constrain_to_tech_nodes(from_node)
+    to_node, y = constrain_to_tech_nodes(to_node)
+    scale = (y / x) ** 2
+
     x = get_technology_node_index(from_node)
     y = get_technology_node_index(to_node)
 
     # This does 2D linear interpolation
-    return sum(
+    return scale * sum(
         [
             AREA_SCALING[floor(x)][floor(y)] * (1 - x % 1) * (1 - y % 1),
             AREA_SCALING[floor(x)][ceil(y)] * (1 - x % 1) * (y % 1),
@@ -92,8 +104,13 @@ def get_tech_node_energy_scale(
 ) -> float:
     """Returns the scaling factor for energy from the technology node
     `from_node` to the technology node `to_node`. Interpolates if necessary."""
+    from_node, x = constrain_to_tech_nodes(from_node)
+    to_node, y = constrain_to_tech_nodes(to_node)
+    scale = y / x
+
     x = get_technology_node_index(from_node)
     y = get_technology_node_index(to_node)
+
     if vdd is None:
         vdd = 0.8
     # Outer sum does linear interpolation
@@ -117,7 +134,7 @@ def get_tech_node_energy_scale(
         ]
     )
 
-    return y_e_factor / x_e_factor
+    return y_e_factor / x_e_factor * scale
 
 
 # =============================================================================
