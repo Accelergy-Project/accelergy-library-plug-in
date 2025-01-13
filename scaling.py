@@ -83,12 +83,14 @@ def get_tech_node_area_scale(from_node: float, to_node: float) -> float:
     `from_node` to the technology node `to_node`. Interpolates if necessary."""
     from_node, x = constrain_to_tech_nodes(from_node)
     to_node, y = constrain_to_tech_nodes(to_node)
-    scale = (y / x) ** 2
+    scale = (y / x)
 
     x = get_technology_node_index(from_node)
     y = get_technology_node_index(to_node)
 
-    # This does 2D linear interpolation
+    # Any unaccounted for scaling with "scale" variable is assumed to scale
+    # linearly with tech node based on IDRS 2016 and 2017 predicted estimated
+    # SoC area
     return scale * sum(
         [
             AREA_SCALING[floor(x)][floor(y)] * (1 - x % 1) * (1 - y % 1),
@@ -106,7 +108,7 @@ def get_tech_node_energy_scale(
     `from_node` to the technology node `to_node`. Interpolates if necessary."""
     from_node, x = constrain_to_tech_nodes(from_node)
     to_node, y = constrain_to_tech_nodes(to_node)
-    scale = y / x
+    scale = (y / x) ** 0.5
 
     x = get_technology_node_index(from_node)
     y = get_technology_node_index(to_node)
@@ -134,6 +136,9 @@ def get_tech_node_energy_scale(
         ]
     )
 
+    # Any unaccounted for scaling with "scale" variable is assumed to scale with
+    # square root of tech node based on IDRS 2016 and 2017 predicted estimated
+    # fJ/switch
     return y_e_factor / x_e_factor * scale
 
 
