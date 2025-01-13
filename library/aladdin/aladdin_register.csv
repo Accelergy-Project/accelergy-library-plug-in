@@ -1,4 +1,4 @@
 technology,global_cycle_seconds,width|datawidth,dynamic energy(pJ),area(um^2),action
-45nm,1e-9,1,0.009,5.98E+00,read
-45nm,1e-9,1,0,5.98E+00,write
-45nm,1e-9,1,0,5.98E+00,leak|update
+40nm,1e-9,1,0.009,5.98E+00,read
+40nm,1e-9,1,0,5.98E+00,write
+40nm,1e-9,1,0,5.98E+00,leak|update

@@ -1,6 +1,6 @@
 technology,global_cycle_seconds,energy,area,n_instances,action
-45nm,1e-9,0.25,0,1,multiply|read,
-45nm,1e-9,0,0,1,update|leak|write,
+40nm,1e-9,0.25,0,1,multiply|read,
+40nm,1e-9,0,0,1,update|leak|write,
 # Assuming multiplication energy scales linearly with input, weight, and output energy
 # Efficient processing of DNNs (Sze, 2020): 8b*8b->16b multiply 0.2pJ
 # 16b * 8b -> 8b multiply: 0.2 pJ
