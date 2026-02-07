@@ -1,3 +1,7 @@
+# Deprecation Warning
+
+Please see https://github.com/Accelergy-Project/hwcomponents-library for the latest version.
+
 # Library Accelergy Plug-in
 This Accelergy plug-in provides a library of components from published works.
 It is intended to be used to rapidly model prior works and to provide a common
